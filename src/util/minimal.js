@@ -22,13 +22,9 @@ util.utf8 = require("@protobufjs/utf8");
 // override utf8.read with overlong-safe version (CVE-2026-44288)
 var _replacementChar = "�";
 util.utf8.read = function utf8_read(buffer, start, end) {
-    var len = end - start;
-    if (len < 1)
+    if (end - start < 1)
         return "";
-    var parts = null,
-        chunk = [],
-        i = 0,
-        str = "";
+    var str = "";
     for (var i = start; i < end;) {
         var t = buffer[i++];
         if (t <= 0x7F) {
